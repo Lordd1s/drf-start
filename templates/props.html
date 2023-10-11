@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Подача полезных предложений</title>
+    <!-- Подключение библиотеки Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="display-4">Подача полезных предложений</h1>
+        {% if success %}
+        <h3 class="text-success">{{ success }}</h3>
+        {% else %}
+        <h3 class="text-danger">{{ error }}</h3>
+        {% endif %}
+        <form action="{% url 'props' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="fullName">ФИО:</label>
+                <input type="text" class="form-control" id="fullName" name="fullName" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="suggestion">Полезное предложение:</label>
+                <textarea class="form-control" id="suggestion" name="suggestion" rows="5" required></textarea>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="subscribe" name="switch">
+                <label class="form-check-label" for="subscribe">ORM/NATIVE switcher</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    </div>
+
+    <!-- Подключение библиотеки Bootstrap JavaScript (для интерактивных элементов) -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
