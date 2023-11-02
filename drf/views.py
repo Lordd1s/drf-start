@@ -54,7 +54,8 @@ def props(request):
                 models.ProposeModel.objects.create(full_name=full_name, email=email, suggestion=suggestion)
             elif switch == 'on':
                 with connection.cursor() as cursor:
-                    cursor.execute("INSERT INTO drf_proposemodel (full_name, email, suggestion, date) VALUES (?, ?, ?, ?)", (full_name, email, suggestion, date))
+                    cursor.execute("INSERT INTO drf_proposemodel (full_name, email, suggestion, date) VALUES (%s, %s, %s, %s)",
+                                   (full_name, email, suggestion, date))
 
         else:
             return render(request, "props.html", context={"error": "Введите правильный email"})
