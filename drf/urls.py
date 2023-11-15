@@ -7,13 +7,12 @@ from django.urls import path
 from drf import views
 
 urlpatterns = [
-    # path('api/', views.api),
+    path("", views.home, name="home"),
     # path('api/get', views.api_get),
-    path('api/', views.props),
-    path('api/<str:pk>', views.props_del_upd),
-    path('api/news/', views.news),
-    path('api/news/<str:pk>', views.news_one),
-
+    path("api/", views.props),
+    path("api/<str:pk>", views.props_del_upd),
+    path("api/news/", views.news),
+    path("api/news/<str:pk>", views.news_one),
 ]
 
 if settings.DEBUG:

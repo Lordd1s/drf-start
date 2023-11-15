@@ -10,7 +10,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -127,7 +126,9 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
+.idea
+/idea
+/drf-frontend
 # Spyder project settings
 .spyderproject
 .spyproject
