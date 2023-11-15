@@ -60,19 +60,23 @@ def props(request: Request) -> Response:
         return Response(data={"message": "created"}, status=status.HTTP_201_CREATED)
 
 
-@api_view(http_method_names=["DELETE", "PUT"])
-def props_del_upd(request: Request, pk: str) -> Response:
+@api_view(http_method_names=["GET", "DELETE", "PUT", "PATCH"])
+def props_del_upd(request: Request, pk) -> Response:
     data = get_object_or_404(models.ProposeModel, id=int(pk))
-    if request.method == "DELETE":
+    if request.method == "GET":
+        data = serializers.ProposeModelSerializer(data, many=False).data
+        return Response(data=data, status=status.HTTP_200_OK)
+    elif request.method == "DELETE":
         try:
             data.delete()
             return Response(data={"message": "delete successful"}, status=status.HTTP_204_NO_CONTENT)
         except Exception as e:
             return Response(data={"error": e}, status=status.HTTP_403_FORBIDDEN)
-    elif request.method == "PUT":
-        full_name = str(request.data.get('full_name'))
-        email = str(request.data.get('email', ''))
-        suggestion = str(request.data.get('suggestion'))
+    elif request.method == "PUT" or request.method == "PATCH":
+        full_name = str(request.data.get('full_name', data.full_name))
+        email = str(request.data.get('email', data.email))
+        suggestion = str(request.data.get('suggestion', data.suggestion))
+
         try:
             validate_email(email)
         except ValidationError:
@@ -87,7 +91,7 @@ def props_del_upd(request: Request, pk: str) -> Response:
 
         try:
             data.save()
-            return Response(data={"message": "update successful"}, status=status.HTTP_200_OK)
+            return Response(data={"message": "Update successful"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response(data={"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
